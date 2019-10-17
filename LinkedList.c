@@ -1,88 +1,60 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-struct node{
-
+struct node
+{
+    int data;
+    struct node* next;
+};
+struct node *push(struct node* top)
+{
+    struct node *newnode;
     int info;
-    struct node *link;
-
-};
-
-struct node *START=NULL;
-
-struct node* createNode(){
-    struct node *n=(struct node*)malloc(sizeof(struct node));
-return(n);
-};
-
-void insertNode(){
-    struct node *temp, *t;
-    temp=createNode();
-    printf("Number: ");
-    scanf("%d",&temp->info);
-    temp->link=NULL;
-    if(START=NULL){
-        START=temp;
-    }
-    else{
-        t=START;
-        while(t->link!=NULL){
-            t=t->link;
-            t->link=temp;
+    scanf("%d",&info);
+    while(info!=-1)
+    {
+        newnode=(struct node *)malloc(sizeof(struct node *));
+        newnode->data=info;
+        if(top==NULL)
+        {
+            top=newnode;
+            printf("enter -1 to end\n");
+            scanf("%d",&info);
+        }
+        else
+        {
+            newnode->data=info;
+            newnode->next=top;
+            top=newnode;
+            printf("enter -1 to end\n");
+            scanf("%d",&info);
         }
     }
+    return top;
 }
-
-void deleteNode(){
-    struct node *r;
-    if(START=NULL){
-        printf("List empty");
-    }
-    else{
-        r=START;
-        START=START->link;
-        free(r);
-    }
-}
-
-
-void viewList(){
-    if(START=NULL){
-        printf("list empty");
-    }
-    else{
-        struct node * t=START;
-        while(t!=NULL){
-            printf("%d",t->info);
-            t=t->link;
-        }
+void display(struct node *top)
+{
+    struct node *ptr;
+    ptr=top;
+    while(ptr!=NULL)
+    {
+        printf("%d\n",ptr->data);
+        ptr=ptr->next;
     }
 }
-int menu(){
-    int ch;
-    printf("1: add val\n");
-    printf("2: del val\n");
-    printf("3: print val\n");
-    printf("4: exit val\n");
-    printf("input:    \n");
-    scanf("%d",&ch);
-    return(ch);
+void pop(struct node *top)
+{
+    struct node *ptr;
+    ptr=top;
+    top=top->next;
+    free(ptr);
 }
-
 int main()
 {
-    while(1){
-
-        switch(menu()){
-        case 1:insertNode();
-                break;
-        case 2:deleteNode();
-                break;
-        case 3:viewList();
-                break;
-        case 4:exit(0);
-        default:printf("invalid input");
-
-        }
-    }
+    struct node *top=NULL;
+    top=push(top);
+    pop(top);
+    display(top);
+    return 0;
 }
+
+
